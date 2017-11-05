@@ -1,0 +1,10 @@
+<VirtualHost *:80>
+  ServerName example.com
+  DocumentRoot /home/asagao/rails_root/public
+  RackEnv production
+  <Directory /home/asagao/rails_root/public>
+    AllowOverride all
+    Options -MultiViews
+  </Directory>
+</VirtualHost>
+

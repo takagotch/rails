@@ -1,0 +1,39 @@
+#!/bin/sh
+#
+# asagao        Startup script for asagao (a rails app)
+#
+# chkconfig: - 85 15
+# description: asagao -- a rails app
+
+. /etc/rc.d/init.d/functions
+
+#/etc/init.d/
+
+PROG_NAME=asagao
+USER=asagao
+APP_ROOT=/home/asagao/rails_root
+RAILS_ENV=production
+PID_FILE=$APP_ROOT/tmp/pids/unicorn.pid
+CONFIG_FILE=$APP_ROOT/config/unicorn.rb
+CMD="/usr/local/bin/bundle /usr/local/bin/unicorn_rails"
+ARGS="-c $CONFIG_FILE -D -E $RAILS_ENV"
+
+export PATH=/usr/local/bin:$PATH
+cd $APP_ROOT || exit 1
+
+case $1 in
+  start)
+    daemon --user=$USER --pidfile=$PID_FILE $CMD $ARGS
+    ;;
+  stop)
+    killproc -p $PID_FILE $PROG_NAME -QUIT
+    ;;
+  restart)
+    killproc -p $PID_FILE $PROG_NAME -USR2
+    ;;
+  *)
+  echo >&2 "Usage: $0 <start|stop|restart>"
+  exit 1
+  ;;
+esac
+

@@ -1,0 +1,12 @@
+  RewriteEngine On
+
+  RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
+  RewriteCond %{REQUEST_URI} !^/assets/
+  RewriteCond %{REQUEST_URI} !^/favicon\.ico$
+  RewriteCond %{REQUEST_URI} !^/robots\.txt$
+  RewriteCond %{ENV:REDIRECT_STATUS} !=503
+  RewriteRule ^.*$ - [R=503,L]
+
+  RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html !-f
+  RewriteRule ^/system/maintenance.html$ /500.html [L]
+

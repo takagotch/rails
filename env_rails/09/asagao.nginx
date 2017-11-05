@@ -1,0 +1,26 @@
+#/etc/centos/site-available/
+
+upstream asagao {
+  server unix:/tmp/asagao.sock;
+}
+
+server {
+  listen 80;
+  server_name example.com;
+
+  root /home/asagao/rails_root/public;
+  access_log /var/log/nginx/asagao_access.log;
+  error_log /var/log/nginx/asagao_error.log;
+  client_max_body_size 100m;
+  error_page 500 502 503 504 /500.html;
+
+  try_files $uri/index.html $uri @app;
+
+  location @app {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_pass http://asagao;
+  }
+}
+

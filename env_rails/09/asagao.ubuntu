@@ -1,0 +1,44 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          asagao
+# Required-Start:    $local_fs $remote_fs $network $syslog
+# Required-Stop:     $local_fs $remote_fs $network $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts asagao (a rails app)
+# Description:       starts asagao (a rails app) using start-stop-daemon
+### END INIT INFO
+
+#/etc/init.d
+
+USER=asagao
+APP_ROOT=/home/asagao/rails_root
+RAILS_ENV=production
+PID_FILE=$APP_ROOT/tmp/pids/unicorn.pid
+CONFIG_FILE=$APP_ROOT/config/unicorn.rb
+CMD="/usr/local/bin/bundle exec /usr/local/bin/unicorn_rails"
+ARGS="-c $CONFIG_FILE -D -E $RAILS_ENV"
+
+export PATH=/usr/local/bin:$PATH
+
+case $1 in
+  start)
+    start-stop-daemon --start --chuid $USER --chdir $APP_ROOT \
+      --exec $CMD -- $ARGS || true
+    ;;
+  stop)
+    start-stop-daemon --stop --signal QUIT --pidfile $PID_FILE || true
+    ;;
+  restart|force-reload)
+    start-stop-daemon --stop --signal USR2 --pidfile $PID_FILE || true
+    ;;
+  status)
+    status_of_proc -p $PID_FILE "$CMD" asagao && exit 0 || exit $?
+    ;;
+  *)
+    echo >&2 "Usage: $0 <start|stop|restart|force-reload|status>"
+    exit 1
+    ;;
+esac
+
