@@ -4,7 +4,7 @@ cd rails
 rails server
 http://localhost:3000/
 
-bin/rails g controller hellow index
+bin/rails g controller hello index
 vi app/views/hello/index.html
 <h1>Hello, Confirmation</h1>
 vi config/routes.rb
