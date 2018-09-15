@@ -2,7 +2,7 @@ rails -v
 rails new app
 cd rails
 rails server
-http://localhost:3000/
+curl http://localhost:3000/
 
 bin/rails g controller hello index
 vi app/views/hello/index.html
@@ -12,6 +12,22 @@ Rails.application.routes.draw do
   get 'hello/index'
 end
 
-http://localhost:3000/hello/index
+curl http://localhost:3000/hello/index
+
+
+vi config/routes.rb
+resources :articles
+bin/rake routes
+
+bin/rails controller articles
+vi app/controllers/articles_controller.rb
+def new
+end
+curl http://localhost:3000/articles/new
+vi app/views/articles/new.html.erb
+<h1>New Article</h1>
+curl http://localhost:3000/articles/new
+
+
 
 
