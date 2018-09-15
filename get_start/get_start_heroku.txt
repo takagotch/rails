@@ -1,0 +1,49 @@
+heroku login
+gem install rails --no--ri --no-rdoc
+rails new app --database=postgresql
+cd myapp
+
+vi Gemfile
+gem 'sqlite3' 
+gem 'pg'
+bundle install
+
+cat config/database.yml
+rails g controller hello
+vi app/views/hello/index.html.erb
+<h1>Hello TKY</h1>
+vi config/routes.rb
+root 'hello#index'
+rails server
+curl http://localhost:3000
+
+vi config/environments/production.rb
+config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+if ENV["RAILS_LOG_TO_STDOUT"].present?
+  logger = ActiveSupport::Logger.new(STDOUT)
+  logger.formatter = config.log_formatter
+  config.logger = ActiveSupport::TaggedLogging.new(logger)
+end
+ruby "2.5.1"
+
+heroku create
+git push heroku mster
+heroku run rake db:migrate
+heroku ps:sacle web=1
+heroku ps
+heroku open
+heroku logs --tail
+
+heroku run rake db:migrate
+vi Gemfile
+gem 'puma'
+bundle install
+
+https://devcenter.heroku.com/articles/getting-started-with-rails5
+
+
+
+
+
+
+
