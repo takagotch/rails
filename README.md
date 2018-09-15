@@ -17,4 +17,5 @@ http://railscasts.com/episodes/366-sidekiq?language=ja&view=asciicast
 
 ##### installer
 http://railsinstaller.org/en
+tky@DESKTOP-XXX /c/Sites/.
 
