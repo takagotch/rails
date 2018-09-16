@@ -1,6 +1,6 @@
 rails -v
 rails new app
-cd rails
+cd app
 rails server
 curl http://localhost:3000/
 
@@ -19,7 +19,7 @@ vi config/routes.rb
 resources :articles
 bin/rake routes
 
-bin/rails controller articles
+bin/rails g controller articles
 vi app/controllers/articles_controller.rb
 def new
 end
