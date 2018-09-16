@@ -30,7 +30,8 @@ curl http://localhost:3000/articles/new
 
 vi app/views/articles/new.html.erb
 #<%= form_for :article do |f| %>
- <%= form_for :article, url: articles_path do |f| %>
+/*
+  <%= form_for :article, url: articles_path do |f| %>
   <p>
     <%= f.label :title %><br>
     <%= f.text_field :title %>
@@ -40,26 +41,37 @@ vi app/views/articles/new.html.erb
   <p>
     <%= f.submit %>
   </p>
-  <p>
-  </p>
 <% end %>
+*/
 bin/rails routes
-
 vi app/controllers/articles_controller.rb
 def new
 end
 def create
   render plain: params[:article].inspect
 end
-
 bin/rails g model Article title:string text:text
 vi db/migrate/2018091600_create_article.rb
 bin/rake db:migrate
-vi config/database.yml
-rake db:migrate RAILS_ENV=production
+#vi config/database.yml
+#rake db:migrate RAILS_ENV=production
 
 vi app/controllers/articles_controller.rb
+/*
 def create
+  @article = Article.new(article_params)
+
+  @article.save
+  redirect_to @article
+end
+private
+  def article_params
+    params.require(:article).permit(:title, :text)
+  end
+*/
+/*
+def create
+#render plain: params[:article].inspect
  @article = Article.new(params[:article])
 # @article = Article.new(params.require(:article).permit(:title, :text))
   
@@ -70,7 +82,9 @@ private
 def article_params
   params.require(:article).permit(:title, :text)
 end
+*/
 curl http://localhost:3000/articles/new
+
 vi app/controllers/articles_controller.rb
 def show
   @article = Article.find(params[:id])
@@ -85,6 +99,8 @@ vi app/views/articles/show.html.erb
   <%= @article.text %>
 </p>
 curl http://localhost:3000/articles/new
+
+
 vi app/controllers/article_controller.rb
 def index
   @article = Article.all
@@ -101,7 +117,7 @@ vi app/views/articles/index.html.erb
     <th>Title</th>
     <th>Text</th>
   </tr>
-  <% @article.each do |article| %>
+  <% @articles.each do |article| %>
     <tr>
       <td><%= article.title %></td>
       <td><%= article.text %></td>
@@ -109,6 +125,7 @@ vi app/views/articles/index.html.erb
   <% end %>
 </table>
 curl http://localhost:3000/articles
+
 vi app/views/hello/index.html.erb
 <h1>Hello, Blog!</h1>
 <%= link_to 'New article', new_article_path%>
@@ -116,7 +133,7 @@ vi app/views/hello/index.html.erb
 vi app/views/articles/new.html.erb
 <%= form_for :article, url: article_path do |f| %>
 <% end %>
-<%= link_to '', articles_path %>
+<%= link_to 'Back', articles_path %>
 vi app/views/articles/show.html.erb
 <p>
   <strong>Title:</strong>
@@ -127,6 +144,10 @@ vi app/views/articles/show.html.erb
   <%= @article.text %>
 </p>
 <%= link_to 'Back', articles_path %>
+http://localhost:3000/hp/index
+http://localhost:3000/articles
+http://localhost:3000/articles/new
+http://localhost:3000/
 
 vi app/models/articles.rb
 class Article < ActiveRecord::Base
@@ -134,7 +155,7 @@ end
 vi app/models/articles.rb
 class Article < ActiveRecord::Base
   validates :title, presence: true,
-                    length: { minimum: 5 }
+                    length: { miFshonimum: 5 }
 end
 vi app/controllers/articles_controller.rb
 def new
@@ -228,7 +249,7 @@ vi app/views/articles/edit.html.erb
      <tr>
        <td>><%= article.title %></td>
        <td><%= article.text %></td>
-       <td><%= link_to 'Show', article_path(article) %></td>
+       <td><%= link_to 'Back', article_path(article) %></td>
        <td><%= link_to 'Edit', edit_article_path(article) %></td>
      </tr>
    <% end %>
