@@ -19,3 +19,33 @@ http://railscasts.com/episodes/366-sidekiq?language=ja&view=asciicast
 http://railsinstaller.org/en
 tky@DESKTOP-XXX /c/Sites/.
 
+
+---
+
+```
+- activerecord
+- activejob
+- activesupport
+- activemodel
+- actionstorage
+
+- actioncable
+- actionmailer
+- actionpack
+- actionview
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
