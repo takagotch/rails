@@ -19,6 +19,11 @@ http://railscasts.com/episodes/366-sidekiq?language=ja&view=asciicast
 http://railsinstaller.org/en
 tky@DESKTOP-XXX /c/Sites/.
 
+---
+https://github.com/ror5book/RailsSampleApp
+
+https://railstutorial.jp/chapters/advanced_login?version=5.1#cha-advanced_login
+
 
 ---
 
